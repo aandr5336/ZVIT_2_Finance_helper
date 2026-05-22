@@ -403,7 +403,7 @@ def control_panel_view(page):
     return ft.View(
         route="/control_panel",
         padding=0,
-        bgcolor="#0f0f0f",
+        bgcolor=ft.Colors.BLACK,
         controls=[
             ft.Column(
                 controls=[

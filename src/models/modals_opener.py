@@ -120,14 +120,14 @@ def open_left_menu_dialog(page, go_home, go_control_panel, go_transactions, go_b
         page.pop_dialog()
 
     items = [
-        (ft.Icons.HOME_OUTLINED, "Головна", "Повернутись на головну", lambda e: go_home()),
-        (ft.Icons.DASHBOARD_OUTLINED, "Панель керування", "Огляд фінансів", lambda e: go_control_panel()),
-        (ft.Icons.SWAP_HORIZ, "Транзакції", "Всі операції", lambda e: go_transactions()),
-        (ft.Icons.PIE_CHART_OUTLINE, "Бюджет", "Планування витрат", lambda e: go_budget()),
-        (ft.Icons.FLAG_OUTLINED, "Цілі", "Фінансові цілі", lambda e: go_goals()),
-        (ft.Icons.BAR_CHART_OUTLINED, "Звіти", "Аналітика та статистика", lambda e: go_reports()),
-        (ft.Icons.CATEGORY_OUTLINED, "Категорії", "Управління категоріями", lambda e: go_categories()),
-        (ft.Icons.SETTINGS_OUTLINED, "Налаштування", "Параметри акаунту", lambda e: go_settings()),
+        (ft.Icons.HOME_OUTLINED, "Головна", "Повернутись на головну", lambda e: go_home(e)),
+        (ft.Icons.DASHBOARD_OUTLINED, "Панель керування", "Огляд фінансів", lambda e: go_control_panel(e)),
+        (ft.Icons.SWAP_HORIZ, "Транзакції", "Всі операції", lambda e: go_transactions(e)),
+        (ft.Icons.PIE_CHART_OUTLINE, "Бюджет", "Планування витрат", lambda e: go_budget(e)),
+        (ft.Icons.FLAG_OUTLINED, "Цілі", "Фінансові цілі", lambda e: go_goals(e)),
+        (ft.Icons.BAR_CHART_OUTLINED, "Звіти", "Аналітика та статистика", lambda e: go_reports(e)),
+        (ft.Icons.CATEGORY_OUTLINED, "Категорії", "Управління категоріями", lambda e: go_categories(e)),
+        (ft.Icons.SETTINGS_OUTLINED, "Налаштування", "Параметри акаунту", lambda e: go_settings(e)),
     ]
 
     def menu_item(icon, label, subtitle, on_click):

@@ -26,6 +26,8 @@ def main(page: ft.Page):
             page.views.append(login_view(page))
         elif page.route == "/control_panel":
             page.views.append(control_panel_view(page))
+        elif page.route == "/transactions":
+            page.views.append(transactions_view(page))
         page.update()
 
 
@@ -37,7 +39,7 @@ def main(page: ft.Page):
 
     page.on_route_change = route_change
     page.on_view_pop = view_pop
-    page.route = "/control_panel"
+    page.route = "/transactions"
     route_change()
 
 

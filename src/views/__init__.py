@@ -1,3 +1,5 @@
 from .main_page import *
 from .login_page import *
 from .register_page import *
+from .transactions_page import *
+from .control_panel_page import *
