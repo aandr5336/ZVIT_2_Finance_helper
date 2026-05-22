@@ -1,17 +1,31 @@
 import flet as ft
+
+from src.views.control_panel_page import control_panel_view
 from views import *
 
 
 def main(page: ft.Page):
     page.title = "Finance helper"
+    page.fonts = {
+        "AmaticSC": "AmaticSC-Bold.ttf",
+        "FiraCode":"FiraCode-SemiBold.ttf",
+        "Lobster":"Lobster-Regular.ttf",
+        "Manrope":"Manrope-Medium.ttf",
+        "Poppins":"Poppins-Medium.ttf",
+        "Nunito-Sans":"NunitoSans-Italic-VariableFont_YTLC,opsz,wdth,wght.ttf"
+    }
 
     def route_change():
         page.views.clear()
-        page.views.append(login_view(page))
+        page.views.append(home_view(page))
         if page.route == "/":
             page.views.append(home_view(page))
-        if page.route == "/register":
+        elif page.route == "/register":
             page.views.append(register_view(page))
+        elif page.route == "/login":
+            page.views.append(login_view(page))
+        elif page.route == "/control_panel":
+            page.views.append(control_panel_view(page))
         page.update()
 
 
@@ -23,6 +37,7 @@ def main(page: ft.Page):
 
     page.on_route_change = route_change
     page.on_view_pop = view_pop
+    page.route = "/control_panel"
     route_change()
 
 

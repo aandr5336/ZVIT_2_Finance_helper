@@ -1,130 +1,224 @@
 import flet as ft
 from src.models import *
+from src.assets import *
+
 
 def home_view(page):
 
-
-    def open_menu_dialog(page):
-        async def go(e, route):
-            page.close(dlg)
-            await page.push_route(route)
-
-        items = [
-            (ft.Icons.HOME_OUTLINED, "Головна"),
-            (ft.Icons.DASHBOARD_OUTLINED, "Панель керування"),
-            (ft.Icons.SWAP_HORIZ, "Транзакції"),
-            (ft.Icons.PIE_CHART_OUTLINE, "Бюджет"),
-            (ft.Icons.FLAG_OUTLINED, "Цілі"),
-            (ft.Icons.BAR_CHART_OUTLINED, "Звіти"),
-            (ft.Icons.CATEGORY_OUTLINED, "Категорії"),
-            (ft.Icons.SETTINGS_OUTLINED, "Налаштування"),
-        ]
-
-        nav_items = [ft.Button(
-                    icon=ft.Icon(icon, color=ft.Colors.WHITE),
-                    content = label,
-                    bgcolor = ft.Colors.ORANGE_900,
-                    width = float("inf"),
-                    height = 70,
-                    color=ft.Colors.WHITE,
-                    style = ft.ButtonStyle(shape = ft.RoundedRectangleBorder(radius=10), overlay_color = ft.Colors.ORANGE_700, ),
-                )
-                for icon, label in items
-        ]
-
-
-        dlg = ft.AlertDialog(
-            bgcolor=ft.Colors.RED_900,
-            alignment=ft.Alignment.TOP_LEFT,
-            content=ft.Column(
-                tight=True,
-                width=300,
-                controls=[
-                    ft.Container(
-                        bgcolor=ft.Colors.ORANGE_900,
-                        padding=ft.Padding.symmetric(vertical=20, horizontal=20),
-                        border_radius=ft.border_radius.only(top_left=12, top_right=12),
-                        content=ft.Row(
-                            controls=[
-                                ft.CircleAvatar(
-                                    content=ft.Icon(ft.Icons.PERSON, color=ft.Colors.WHITE, size=28),
-                                    bgcolor=ft.Colors.RED_900,
-                                    radius=28,
-                                ),
-                                ft.Text("Finance helper", color=ft.Colors.WHITE,
-                                        size=16, weight=ft.FontWeight.BOLD),
-                            ],
-                            spacing=12,
-                        ),
-
-                    ),
-                    ft.Divider(color=ft.Colors.ORANGE_700, height=1),
-                    *nav_items,
-                ],
-            ),
-        )
-
-        page.show_dialog(dlg)
-
-
-    def you_are_on_home_page_func(e):
-        message_you_are_on_home_page = ft.SnackBar(ft.Text("Ви зараз на головній сторінці", color = ft.Colors.WHITE), bgcolor = ft.Colors.RED_900)
-        page.show_dialog(message_you_are_on_home_page)
-
-
-    async def open_register(e):
+    async def open_login(e):
         await page.push_route("/login")
 
-    main_bg_gradient = ft.Container(
-        gradient = ft.RadialGradient(
-                            center=ft.Alignment.CENTER,
-                            radius=1.3,
-                            colors=[ft.Colors.YELLOW_700, ft.Colors.ORANGE_900,],
-                            stops=[0.0, 1.0],
+    async def go_home():
+        await page.push_route("/")
+
+    async def go_control_panel():
+        await page.push_route("/control_panel")
+
+    async def go_transactions():
+        await page.push_route("/transactions")
+
+    async def go_budget():
+        await page.push_route("/budget")
+
+    async def go_goals():
+        await page.push_route("/goals")
+
+    async def go_reports():
+        await page.push_route("/reports")
+
+    async def go_categories():
+        await page.push_route("/categories")
+
+    async def go_settings():
+        await page.push_route("/settings")
+
+
+    hero = ft.Container(
+        content=ft.Text(
+            "Особисті фінанси нового покоління",
+            color=ft.Colors.ORANGE_300,
+            size=13,
+            weight=ft.FontWeight.W_500,
+            style = ft.TextStyle(letter_spacing=1.2)
         ),
-        expand=True,
-        height = 1000,
-        alignment = ft.Alignment.CENTER
+        border=ft.Border.all(1, ft.Colors.with_opacity(0.3, ft.Colors.ORANGE_300)),
+        border_radius=20,
+        padding=ft.Padding(left=14, right=14, top=6, bottom=6),
+        margin=ft.Margin.only(bottom=28),
     )
 
-    bottom_bar = ft.BottomAppBar(
-        bgcolor=ft.Colors.ORANGE_900,
-        content=ft.Row(
-            alignment=ft.MainAxisAlignment.SPACE_AROUND,
+    hero_title = ft.Text(
+        "Контролюй свої\nфінанси розумно",
+        size=52,
+        weight=ft.FontWeight.W_700,
+        color=ft.Colors.WHITE,
+        text_align=ft.TextAlign.CENTER,
+    )
+
+    hero_subtitle = ft.Text(
+        "Finance Helper — ваш помічник у контролі витрат і плануванні бюджету.",
+        size=17,
+        color=ft.Colors.with_opacity(0.65, ft.Colors.WHITE),
+        text_align=ft.TextAlign.CENTER,
+        weight=ft.FontWeight.W_400,
+    )
+
+    btn_login = ft.Button(
+        content=ft.Text(
+            "Увійти до акаунту",
+            color=ft.Colors.WHITE,
+            size=16,
+            weight=ft.FontWeight.W_500,
+        ),
+        on_click=open_login,
+        bgcolor=ft.Colors.ORANGE_700,
+        style = ft.ButtonStyle(padding=ft.Padding(left=40, right=40, top=20, bottom=20)),
+    )
+
+    cards_row = ft.Row(
+        controls=[
+            card_maker(ft.Icons.ANALYTICS_OUTLINED, "Аналітика", "Детальні графіки та звіти по витратах"),
+            card_maker(ft.Icons.SAVINGS_OUTLINED, "Накопичення", "Відстежуй цілі та прогрес заощаджень"),
+            card_maker(ft.Icons.NOTIFICATIONS_OUTLINED, "Сповіщення", "Нагадування про рахунки та ліміти"),
+        ],
+        spacing=16,
+        alignment=ft.MainAxisAlignment.CENTER,
+    )
+
+
+    hero_section = ft.Stack(
+        controls=[
+            ft.Container(
+                image=ft.DecorationImage(
+                    src="bg_image_for_main_page.png",
+                    fit=ft.BoxFit.COVER,
+                ),
+                expand=True,
+                height=620,
+            ),
+            ft.Container(
+                gradient=ft.LinearGradient(
+                    begin=ft.Alignment(0, -1),
+                    end=ft.Alignment(0, 1),
+                    colors=[
+                        ft.Colors.with_opacity(0.75, ft.Colors.BLACK),
+                        ft.Colors.with_opacity(0.92, ft.Colors.BLACK),
+                    ],
+                ),
+                expand=True,
+                height=620,
+            ),
+            ft.Container(
+                content=ft.Column(
+                    controls=[
+                        hero,
+                        hero_title,
+                        ft.Container(height=16),
+                        hero_subtitle,
+                        ft.Container(height=36),
+                        btn_login,
+                    ],
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    alignment=ft.MainAxisAlignment.CENTER,
+                ),
+                expand=True,
+                height=620,
+                alignment=ft.Alignment.CENTER,
+                padding=ft.Padding(left=40, right=40, top=0, bottom=0),
+            ),
+        ],
+    )
+
+
+    card_section = ft.Container(
+        content=ft.Column(
             controls=[
-                ft.IconButton(ft.Icons.MENU, on_click=lambda e: open_menu_dialog(page), ),
-                ft.IconButton(ft.Icons.HOME, on_click=you_are_on_home_page_func),
-                ft.IconButton(ft.Icons.SETTINGS),
+                ft.Text(
+                    "Чому Finance Helper?",
+                    color=ft.Colors.WHITE,
+                    size=26,
+                    weight=ft.FontWeight.W_700,
+                    text_align=ft.TextAlign.CENTER,
+                ),
+                ft.Container(height=8),
+                ft.Text(
+                    "Все необхідне для фінансового контролю в одному місці",
+                    color=ft.Colors.with_opacity(0.55, ft.Colors.WHITE),
+                    size=15,
+                    text_align=ft.TextAlign.CENTER,
+                ),
+                ft.Container(height=32),
+                cards_row,
             ],
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         ),
+        padding=ft.Padding(left=32, right=32, top=48, bottom=48),
+        bgcolor=ft.Colors.with_opacity(0.04, ft.Colors.WHITE),
     )
 
-    app_bar = ft.Container(
-        content=ft.AppBar(
-            title=ft.Text("Finance helper"),
-            actions=[
+
+    custom_appbar = ft.Container(
+        content=ft.Row(
+            controls=[
+                ft.Row(
+                    controls=[
+                        ft.Icon(ft.Icons.SHOW_CHART, color=ft.Colors.ORANGE_300, size=22),
+                        ft.Text(
+                            "Finance Helper",
+                            color=ft.Colors.WHITE,
+                            size=18,
+                            weight=ft.FontWeight.W_600,
+                            style = ft.TextStyle(letter_spacing=0.3,)
+                        ),
+                    ],
+                    spacing=8,
+                    expand=True,
+                ),
                 ft.IconButton(
-                    ft.Icons.SETTINGS,
-                    on_click=open_register,
-                )
+                    ft.Icons.SETTINGS_OUTLINED,
+                    icon_color=ft.Colors.with_opacity(0.8, ft.Colors.WHITE),
+                    icon_size=20,
+                    on_click=lambda e: open_settings_dialog(page),
+                    tooltip="Налаштування",
+                ),
+                ft.IconButton(
+                    ft.Icons.MENU,
+                    icon_color=ft.Colors.with_opacity(0.8, ft.Colors.WHITE),
+                    icon_size=20,
+                    on_click=lambda e: open_left_menu_dialog(page, go_home, go_control_panel, go_transactions, go_budget, go_goals, go_reports, go_categories, go_settings),
+                    tooltip="Меню",
+                ),
             ],
-            bgcolor=ft.Colors.ORANGE_900,
-            automatically_imply_leading=False
+            vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
-        bgcolor=ft.Colors.ORANGE_900,
-        padding=15,
+        gradient=gradient_for_appbar,
+        height=60,
+        padding=ft.Padding(left=20, right=8, top=0, bottom=0),
+        border=ft.Border(
+            bottom=ft.BorderSide(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE))
+        ),
     )
 
     return ft.View(
         route="/",
-        padding = 0,
-        bottom_appbar = bottom_bar,
-        scroll=ft.ScrollMode.ADAPTIVE,
-        bgcolor =ft.Colors.ORANGE_900 ,
-        controls=[ft.Column([
-                app_bar,
-                main_bg_gradient,
-            ]
+        padding=0,
+        bgcolor=ft.Colors.with_opacity(1, ft.Colors.BLACK),
+        controls=[
+            ft.Column(
+                controls=[
+                    custom_appbar,
+                    ft.Column(
+                        controls=[
+                            hero_section,
+                            card_section,
+                        ],
+                        scroll=ft.ScrollMode.AUTO,
+                        expand=True,
+                        spacing=0,
+                    ),
+                ],
+                spacing=0,
+                expand=True,
             )
-        ]
+        ],
     )
