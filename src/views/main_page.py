@@ -8,28 +8,34 @@ def home_view(page):
     async def open_login(e):
         await page.push_route("/login")
 
-    async def go_home():
-        await page.push_route("/")
+    async def go_home(e):
+        page.pop_dialog()
+        page.show_dialog(
+            ft.SnackBar(
+                ft.Text("Ви зараз на головній сторінці.", color = ft.Colors.WHITE),
+                bgcolor = ft.Colors.ORANGE_600,
+            )
+        )
 
-    async def go_control_panel():
+    async def go_control_panel(e):
         await page.push_route("/control_panel")
 
-    async def go_transactions():
+    async def go_transactions(e):
         await page.push_route("/transactions")
 
-    async def go_budget():
+    async def go_budget(e):
         await page.push_route("/budget")
 
-    async def go_goals():
+    async def go_goals(e):
         await page.push_route("/goals")
 
-    async def go_reports():
+    async def go_reports(e):
         await page.push_route("/reports")
 
-    async def go_categories():
+    async def go_categories(e):
         await page.push_route("/categories")
 
-    async def go_settings():
+    async def go_settings(e):
         await page.push_route("/settings")
 
 

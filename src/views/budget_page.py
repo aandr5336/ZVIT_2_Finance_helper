@@ -7,7 +7,6 @@ def budget_view(page):
 
 
     async def go_home(e):
-        page.pop_dialog()
         await page.push_route("/")
 
 
@@ -20,7 +19,13 @@ def budget_view(page):
 
 
     async def go_budget(e):
-        await page.push_route("/budget")
+        page.pop_dialog()
+        page.show_dialog(
+            ft.SnackBar(
+                ft.Text("Ви зараз на сторінці бюджету.", color = ft.Colors.WHITE),
+                bgcolor = ft.Colors.ORANGE_600,
+            )
+        )
 
 
     async def go_goals(e):

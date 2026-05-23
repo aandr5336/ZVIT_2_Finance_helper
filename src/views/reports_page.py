@@ -7,7 +7,6 @@ def reports_view(page):
 
 
     async def go_home(e):
-        page.pop_dialog()
         await page.push_route("/")
 
 
@@ -28,7 +27,13 @@ def reports_view(page):
 
 
     async def go_reports(e):
-        await page.push_route("/reports")
+        page.pop_dialog()
+        page.show_dialog(
+            ft.SnackBar(
+                ft.Text("Ви зараз на сторінці звітів.", color = ft.Colors.WHITE),
+                bgcolor = ft.Colors.ORANGE_600,
+            )
+        )
 
 
     async def go_categories(e):
@@ -100,17 +105,6 @@ def reports_view(page):
                     spacing=3,
                     expand=True,
                 ),
-                ft.Button(
-                    "Експорт",
-                    icon=ft.Icons.DOWNLOAD_OUTLINED,
-                    bgcolor=ft.Colors.with_opacity(0.08, ft.Colors.WHITE),
-                    color=ft.Colors.WHITE,
-                    style=ft.ButtonStyle(
-                        shape=ft.RoundedRectangleBorder(radius=10),
-                        elevation=0,
-                    ),
-                    height=38,
-                ),
             ],
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
@@ -131,7 +125,7 @@ def reports_view(page):
                     ),
                     height=34,
                 )
-                for label in ["Тиждень", "Місяць", "Квартал", "Рік"]
+                for label in ["Тиждень", "Місяць", "Рік"]
             ],
             spacing=4,
             alignment=ft.MainAxisAlignment.CENTER,

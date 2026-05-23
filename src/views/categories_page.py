@@ -7,7 +7,6 @@ def categories_view(page):
 
 
     async def go_home(e):
-        page.pop_dialog()
         await page.push_route("/")
 
 
@@ -32,7 +31,13 @@ def categories_view(page):
 
 
     async def go_categories(e):
-        await page.push_route("/categories")
+        page.pop_dialog()
+        page.show_dialog(
+            ft.SnackBar(
+                ft.Text("Ви зараз на сторінці категорій.", color = ft.Colors.WHITE),
+                bgcolor = ft.Colors.ORANGE_600,
+            )
+        )
 
 
     async def go_settings(e):
@@ -264,31 +269,17 @@ def categories_view(page):
         )
 
     expense_group = category_group(
-        "Щоденні витрати",
+        "Всі категорії",
         ft.Icons.SHOPPING_CART_OUTLINED,
         [
             category_card(ft.Icons.RESTAURANT_OUTLINED, "Їжа та напої", 3200, 14, ft.Colors.ORANGE_400),
             category_card(ft.Icons.DIRECTIONS_BUS_OUTLINED, "Транспорт", 850, 8, ft.Colors.BLUE_400),
             category_card(ft.Icons.LOCAL_CAFE_OUTLINED, "Кафе", 640, 6, ft.Colors.BROWN_300),
             category_card(ft.Icons.SHOPPING_BAG_OUTLINED, "Покупки", 2100, 11, ft.Colors.PINK_300),
-        ],
-    )
-
-    lifestyle_group = category_group(
-        "Спосіб життя",
-        ft.Icons.FAVORITE_BORDER,
-        [
             category_card(ft.Icons.SPORTS_OUTLINED, "Здоров'я", 1356, 5, ft.Colors.GREEN_400),
             category_card(ft.Icons.MOVIE_OUTLINED, "Розваги", 1200, 7, ft.Colors.PURPLE_300),
             category_card(ft.Icons.BOOK_OUTLINED, "Освіта", 480, 2, ft.Colors.CYAN_400),
             category_card(ft.Icons.FLIGHT_OUTLINED, "Подорожі", 0, 0, ft.Colors.TEAL_400),
-        ],
-    )
-
-    utilities_group = category_group(
-        "Комунальні та інше",
-        ft.Icons.HOME_OUTLINED,
-        [
             category_card(ft.Icons.BOLT_OUTLINED, "Комунальні", 860, 4, ft.Colors.YELLOW_600),
             category_card(ft.Icons.WIFI_OUTLINED, "Інтернет", 180, 1, ft.Colors.BLUE_300),
             category_card(ft.Icons.LOCAL_HOSPITAL_OUTLINED, "Медицина", 320, 2, ft.Colors.RED_300),
@@ -342,10 +333,6 @@ def categories_view(page):
         content=ft.Column(
             controls=[
                 expense_group,
-                ft.Container(height=4),
-                lifestyle_group,
-                ft.Container(height=4),
-                utilities_group,
             ],
             spacing=20,
         ),

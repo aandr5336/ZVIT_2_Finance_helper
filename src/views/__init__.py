@@ -7,3 +7,4 @@ from .budget_page import *
 from .goals_page import *
 from .reports_page import *
 from .categories_page import *
+from .settings_page import *

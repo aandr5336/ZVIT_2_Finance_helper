@@ -7,7 +7,6 @@ def goals_view(page):
 
 
     async def go_home(e):
-        page.pop_dialog()
         await page.push_route("/")
 
 
@@ -24,7 +23,13 @@ def goals_view(page):
 
 
     async def go_goals(e):
-        await page.push_route("/goals")
+        page.pop_dialog()
+        page.show_dialog(
+            ft.SnackBar(
+                ft.Text("Ви зараз на сторінці цілей.", color = ft.Colors.WHITE),
+                bgcolor = ft.Colors.ORANGE_600,
+            )
+        )
 
 
     async def go_reports(e):

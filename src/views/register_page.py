@@ -7,28 +7,28 @@ def register_view(page):
     async def go_login(e):
         await page.push_route("/login")
 
-    async def go_home():
+    async def go_home(e):
         await page.push_route("/")
 
-    async def go_control_panel():
+    async def go_control_panel(e):
         await page.push_route("/control_panel")
 
-    async def go_transactions():
+    async def go_transactions(e):
         await page.push_route("/transactions")
 
-    async def go_budget():
+    async def go_budget(e):
         await page.push_route("/budget")
 
-    async def go_goals():
+    async def go_goals(e):
         await page.push_route("/goals")
 
-    async def go_reports():
+    async def go_reports(e):
         await page.push_route("/reports")
 
-    async def go_categories():
+    async def go_categories(e):
         await page.push_route("/categories")
 
-    async def go_settings():
+    async def go_settings(e):
         await page.push_route("/settings")
 
 

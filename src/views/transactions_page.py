@@ -7,7 +7,6 @@ def transactions_view(page):
 
 
     async def go_home(e):
-        page.pop_dialog()
         await page.push_route("/")
 
 
@@ -16,7 +15,13 @@ def transactions_view(page):
 
 
     async def go_transactions(e):
-        await page.push_route("/transactions")
+        page.pop_dialog()
+        page.show_dialog(
+            ft.SnackBar(
+                ft.Text("Ви зараз на сторінці транзакцій.", color = ft.Colors.WHITE),
+                bgcolor = ft.Colors.ORANGE_600,
+            )
+        )
 
 
     async def go_budget(e):
@@ -142,7 +147,7 @@ def transactions_view(page):
                             ),
                             height=34,
                         )
-                        for label in ["Всі", "Дохід", "Витрати", "Переказ"]
+                        for label in ["Всі", "Дохід", "Витрати"]
                     ],
                     spacing=8,
                     scroll=ft.ScrollMode.AUTO,
