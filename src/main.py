@@ -32,6 +32,10 @@ def main(page: ft.Page):
             page.views.append(budget_view(page))
         elif page.route == "/goals":
             page.views.append(goals_view(page))
+        elif page.route == "/reports":
+            page.views.append(reports_view(page))
+        elif page.route == "/categories":
+            page.views.append(categories_view(page))
         page.update()
 
 
@@ -43,7 +47,7 @@ def main(page: ft.Page):
 
     page.on_route_change = route_change
     page.on_view_pop = view_pop
-    page.route = "/goals"
+    page.route = "/categories"
     route_change()
 
 

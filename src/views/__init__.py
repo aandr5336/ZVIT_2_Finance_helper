@@ -5,3 +5,5 @@ from .transactions_page import *
 from .control_panel_page import *
 from .budget_page import *
 from .goals_page import *
+from .reports_page import *
+from .categories_page import *
