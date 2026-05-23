@@ -3,3 +3,5 @@ from .login_page import *
 from .register_page import *
 from .transactions_page import *
 from .control_panel_page import *
+from .budget_page import *
+from .goals_page import *
