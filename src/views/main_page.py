@@ -81,15 +81,21 @@ def home_view(page):
         style = ft.ButtonStyle(padding=ft.Padding(left=40, right=40, top=20, bottom=20)),
     )
 
-    cards_row = ft.Row(
+    cards_row = (ft.Column(
         controls=[
             card_maker(ft.Icons.ANALYTICS_OUTLINED, "Аналітика", "Детальні графіки та звіти по витратах"),
             card_maker(ft.Icons.SAVINGS_OUTLINED, "Накопичення", "Відстежуй цілі та прогрес заощаджень"),
             card_maker(ft.Icons.NOTIFICATIONS_OUTLINED, "Сповіщення", "Нагадування про рахунки та ліміти"),
         ],
         spacing=16,
-        alignment=ft.MainAxisAlignment.CENTER,
-    )
+        alignment=ft.MainAxisAlignment.CENTER, ))  if page.width <1000 else (ft.Row(
+        controls=[
+            card_maker(ft.Icons.ANALYTICS_OUTLINED, "Аналітика", "Детальні графіки та звіти по витратах"),
+            card_maker(ft.Icons.SAVINGS_OUTLINED, "Накопичення", "Відстежуй цілі та прогрес заощаджень"),
+            card_maker(ft.Icons.NOTIFICATIONS_OUTLINED, "Сповіщення", "Нагадування про рахунки та ліміти"),
+        ],
+        spacing=16,
+        alignment=ft.MainAxisAlignment.CENTER, ))
 
 
     hero_section = ft.Stack(
@@ -209,8 +215,7 @@ def home_view(page):
         route="/",
         padding=0,
         bgcolor=ft.Colors.with_opacity(1, ft.Colors.BLACK),
-        controls=[
-            ft.Column(
+        controls=[ft.Column(
                 controls=[
                     custom_appbar,
                     ft.Column(
@@ -225,6 +230,6 @@ def home_view(page):
                 ],
                 spacing=0,
                 expand=True,
-            )
+            ),
         ],
     )

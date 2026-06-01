@@ -4,7 +4,6 @@ from src.models import *
 
 def login_view(page):
 
-
     async def go_register(e):
         await page.push_route("/register")
 
@@ -12,26 +11,32 @@ def login_view(page):
         await page.push_route("/")
 
     async def go_control_panel(e):
+        page.pop_dialog()
         await page.push_route("/control_panel")
 
     async def go_transactions(e):
+        page.pop_dialog()
         await page.push_route("/transactions")
 
     async def go_budget(e):
+        page.pop_dialog()
         await page.push_route("/budget")
 
     async def go_goals(e):
+        page.pop_dialog()
         await page.push_route("/goals")
 
     async def go_reports(e):
+        page.pop_dialog()
         await page.push_route("/reports")
 
     async def go_categories(e):
+        page.pop_dialog()
         await page.push_route("/categories")
 
     async def go_settings(e):
+        page.pop_dialog()
         await page.push_route("/settings")
-
 
     text_field_email = ft.TextField(
         label="Email",
@@ -58,50 +63,36 @@ def login_view(page):
         can_reveal_password=True,
     )
 
+    async def do_login(e):
+        ok, msg = login_user(text_field_email.value or "", text_field_password.value or "")
+        if ok:
+            await page.push_route("/control_panel")
+        else:
+            show_snack(page, msg, success=False)
 
-    btn_login = ft.Container(
+    btn_login = ft.Button(
         content=ft.Row(
             controls=[
-                ft.Text(
-                    "Увійти",
-                    color=ft.Colors.WHITE,
-                    size=16,
-                    weight=ft.FontWeight.W_600,
-                ),
+                ft.Text("Увійти", color=ft.Colors.WHITE, size=16, weight=ft.FontWeight.W_600),
                 ft.Icon(ft.Icons.ARROW_FORWARD, color=ft.Colors.WHITE, size=18),
             ],
             alignment=ft.MainAxisAlignment.CENTER,
             spacing=8,
         ),
         bgcolor=ft.Colors.ORANGE_700,
-        border_radius=10,
-        padding=ft.Padding(left=0, right=0, top=16, bottom=16),
-        on_click=lambda e: None,
+        style=ft.ButtonStyle(padding=ft.Padding(left=0, right=0, top=16, bottom=16)),
+        on_click=do_login,
     )
-
 
     divider_row = ft.Row(
         controls=[
-            ft.Container(
-                height=1,
-                bgcolor=ft.Colors.with_opacity(0.15, ft.Colors.WHITE),
-                expand=True,
-            ),
-            ft.Text(
-                "або",
-                color=ft.Colors.with_opacity(0.4, ft.Colors.WHITE),
-                size=13,
-            ),
-            ft.Container(
-                height=1,
-                bgcolor=ft.Colors.with_opacity(0.15, ft.Colors.WHITE),
-                expand=True,
-            ),
+            ft.Container(height=1, bgcolor=ft.Colors.with_opacity(0.15, ft.Colors.WHITE), expand=True),
+            ft.Text("або", color=ft.Colors.with_opacity(0.4, ft.Colors.WHITE), size=13),
+            ft.Container(height=1, bgcolor=ft.Colors.with_opacity(0.15, ft.Colors.WHITE), expand=True),
         ],
         spacing=12,
         vertical_alignment=ft.CrossAxisAlignment.CENTER,
     )
-
 
     login_card = ft.Container(
         content=ft.Column(
@@ -110,35 +101,15 @@ def login_view(page):
                     controls=[
                         ft.Row(
                             controls=[
-                                ft.Icon(
-                                    ft.Icons.SHOW_CHART,
-                                    color=ft.Colors.ORANGE_400,
-                                    size=24,
-                                ),
-                                ft.Text(
-                                    "Finance Helper",
-                                    color=ft.Colors.ORANGE_400,
-                                    size=15,
-                                    weight=ft.FontWeight.W_500,
-                                ),
+                                ft.Icon(ft.Icons.SHOW_CHART, color=ft.Colors.ORANGE_400, size=24),
+                                ft.Text("Finance Helper", color=ft.Colors.ORANGE_400, size=15, weight=ft.FontWeight.W_500),
                             ],
                             alignment=ft.MainAxisAlignment.CENTER,
                             spacing=6,
                         ),
                         ft.Container(height=8),
-                        ft.Text(
-                            "Вхід до акаунту",
-                            color=ft.Colors.WHITE,
-                            size=26,
-                            weight=ft.FontWeight.W_700,
-                            text_align=ft.TextAlign.CENTER,
-                        ),
-                        ft.Text(
-                            "Раді бачити тебе знову",
-                            color=ft.Colors.with_opacity(0.45, ft.Colors.WHITE),
-                            size=14,
-                            text_align=ft.TextAlign.CENTER,
-                        ),
+                        ft.Text("Вхід до акаунту", color=ft.Colors.WHITE, size=26, weight=ft.FontWeight.W_700, text_align=ft.TextAlign.CENTER),
+                        ft.Text("Раді бачити тебе знову", color=ft.Colors.with_opacity(0.45, ft.Colors.WHITE), size=14, text_align=ft.TextAlign.CENTER),
                     ],
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     spacing=2,
@@ -147,21 +118,6 @@ def login_view(page):
                 text_field_email,
                 ft.Container(height=4),
                 text_field_password,
-                ft.Container(height=4),
-                ft.Row(
-                    controls=[
-                        ft.Container(
-                            content=ft.Text(
-                                "Забули пароль?",
-                                color=ft.Colors.ORANGE_300,
-                                size=13,
-                            ),
-                            border_radius=4,
-                            padding=ft.Padding(left=4, right=4, top=2, bottom=2),
-                        )
-                    ],
-                    alignment=ft.MainAxisAlignment.END,
-                ),
                 ft.Container(height=20),
                 btn_login,
                 ft.Container(height=20),
@@ -169,18 +125,9 @@ def login_view(page):
                 ft.Container(height=16),
                 ft.Row(
                     controls=[
-                        ft.Text(
-                            "Ще немає акаунту?",
-                            color=ft.Colors.with_opacity(0.5, ft.Colors.WHITE),
-                            size=14,
-                        ),
+                        ft.Text("Ще немає акаунту?", color=ft.Colors.with_opacity(0.5, ft.Colors.WHITE), size=14),
                         ft.Container(
-                            content=ft.Text(
-                                "Створити",
-                                color=ft.Colors.ORANGE_400,
-                                size=14,
-                                weight=ft.FontWeight.W_600,
-                            ),
+                            content=ft.Text("Створити", color=ft.Colors.ORANGE_400, size=14, weight=ft.FontWeight.W_600),
                             border_radius=4,
                             padding=ft.Padding(left=4, right=4, top=2, bottom=2),
                             on_click=go_register,
@@ -200,51 +147,28 @@ def login_view(page):
         width=460,
     )
 
-
     custom_appbar = ft.Container(
         content=ft.Row(
             controls=[
                 ft.Row(
                     controls=[
-                        ft.IconButton(
-                            ft.Icons.ARROW_BACK_IOS_NEW,
-                            icon_color=ft.Colors.with_opacity(0.8, ft.Colors.WHITE),
-                            icon_size=18,
-                            on_click=go_home,
-                            tooltip="Назад",
-                        ),
+                        ft.IconButton(ft.Icons.ARROW_BACK_IOS_NEW, icon_color=ft.Colors.with_opacity(0.8, ft.Colors.WHITE), icon_size=18, on_click=go_home, tooltip="Назад"),
                         ft.Icon(ft.Icons.SHOW_CHART, color=ft.Colors.ORANGE_300, size=20),
-                        ft.Text(
-                            "Finance Helper",
-                            color=ft.Colors.WHITE,
-                            size=18,
-                            weight=ft.FontWeight.W_600,
-                        ),
+                        ft.Text("Finance Helper", color=ft.Colors.WHITE, size=18, weight=ft.FontWeight.W_600),
                     ],
                     spacing=6,
                     expand=True,
                 ),
-                ft.IconButton(
-                    ft.Icons.SETTINGS_OUTLINED,
-                    icon_color=ft.Colors.with_opacity(0.8, ft.Colors.WHITE),
-                    icon_size=20,
-                    on_click=lambda e: open_settings_dialog(page),
-                ),
-                ft.IconButton(
-                    ft.Icons.MENU,
-                    icon_color=ft.Colors.with_opacity(0.8, ft.Colors.WHITE),
-                    icon_size=20,
-                    on_click=lambda e: open_left_menu_dialog(page, go_home, go_control_panel, go_transactions, go_budget, go_goals, go_reports, go_categories, go_settings),
-                ),
+                ft.IconButton(ft.Icons.SETTINGS_OUTLINED, icon_color=ft.Colors.with_opacity(0.8, ft.Colors.WHITE), icon_size=20, on_click=lambda e: open_settings_dialog(page)),
+                ft.IconButton(ft.Icons.MENU, icon_color=ft.Colors.with_opacity(0.8, ft.Colors.WHITE), icon_size=20,
+                              on_click=lambda e: open_left_menu_dialog(page, go_home, go_control_panel, go_transactions, go_budget, go_goals, go_reports, go_categories, go_settings)),
             ],
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
         gradient=gradient_for_appbar,
         height=60,
         padding=ft.Padding(left=8, right=8, top=0, bottom=0),
-        border=ft.Border(
-            bottom=ft.BorderSide(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE))
-        ),
+        border=ft.Border(bottom=ft.BorderSide(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE))),
     )
 
     return ft.View(
