@@ -1,4 +1,5 @@
 import hashlib
+import re
 from src.storage import get_user_by_email, create_user, update_user, add_category, Session
 
 
@@ -12,7 +13,8 @@ def register_user(name: str, email: str, password: str, confirm: str) -> tuple:
 
     if not name:
         return False, "Введіть ім'я"
-    if not email or "@" not in email:
+    email_pattern = re.compile(r'^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$')
+    if not email or not email_pattern.match(email):
         return False, "Введіть коректний email"
     if len(password) < 6:
         return False, "Пароль має бути не менше 6 символів"
